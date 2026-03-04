@@ -1,13 +1,10 @@
 <template>
-    <div>
-        pages/index
-    </div>
+	<template v-for="item in 50">
+		<div class="h-50">{{ item }}</div>
+	</template>
 </template>
 
-<script setup lang="ts">
-
+<script setup>
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

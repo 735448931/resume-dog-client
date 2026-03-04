@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@vueuse/nuxt',['@nuxt/ui', { fonts: false }]],
+  modules: ['@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt', '@vueuse/nuxt', ['@nuxt/ui', { fonts: false }]],
   css: ['~/assets/css/main.css'],
 })

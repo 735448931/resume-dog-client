@@ -4,7 +4,7 @@
 			<NuxtPage />
 		</NuxtLayout>
 
-		<AuthModal></AuthModal>
+		<!-- <AuthModal></AuthModal> -->
 
 		
 	</UApp>
