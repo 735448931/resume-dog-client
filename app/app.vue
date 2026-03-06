@@ -1,8 +1,8 @@
 <template>
-	<UApp>
-		<NuxtLayout>
-			<NuxtPage />
-		</NuxtLayout>
+  <UApp>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
 
 		<!-- <AuthModal></AuthModal> -->
 
