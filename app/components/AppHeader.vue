@@ -58,7 +58,7 @@
 <script setup lang="ts">
 
 const userStore = useUserStore()
-const showLogoutModal = ref(true)
+const showLogoutModal = ref(false)
 
 
 const userMenuItems = [
