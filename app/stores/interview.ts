@@ -6,17 +6,20 @@ export const useInterviewStore = defineStore(
     'interview',
     () => {
         // 侧边栏是否打开
-        const isSidebarOpen = ref(false)
+        const isSidebarOpen = ref(true)
         // 当前步骤：1-选择岗位和简历, 2-面试中, 3-查看报告
         const currentStep = ref<SERVICE_STEP>(SERVICE_STEP.Select)
         // 选中的服务类型：
         const selectedService = ref<SERVICE | null>(null)
 
+        const selectedPosition = ref()
+
 
         return {
             isSidebarOpen,
             currentStep,
-            selectedService
+            selectedService,
+            selectedPosition
         }
     },
     {

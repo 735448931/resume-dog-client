@@ -1,6 +1,8 @@
 <template>
-    <div class="min-h-screen">
-        <slot />
+    <div class="flex flex-col min-h-screen">
+        <main class="flex-1 bg-gray-50">
+            <slot></slot>
+        </main>
     </div>
 </template>
 

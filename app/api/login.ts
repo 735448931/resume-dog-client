@@ -1,20 +1,26 @@
-import type { $Fetch } from 'ofetch'
+// 账号登录响应类型
+export interface EmailLoginResult {
+    token: string
+    userInfo: Record<string, unknown>
+}
 
 // 账号登录
-export const postEmailLoginApi = ($api: $Fetch, body: { email: string, password: string }) => {
-    return $api<any>('/user/login', {
+export const postEmailLoginApi = (body: { email: string; password: string }) => {
+    const { $api } = useNuxtApp()
+    return $api<EmailLoginResult>('/user/login', {
         method: 'POST',
         body
     })
 }
 
 // 账号注册
-export const postRegisterApi = ($api: $Fetch, body: {
-    username: string,
-    email: string,
+export const postRegisterApi = (body: {
+    username: string
+    email: string
     password: string
 }) => {
-    return $api<any>('/user/register', {
+    const { $api } = useNuxtApp()
+    return $api<void>('/user/register', {
         method: 'POST',
         body
     })
@@ -49,7 +55,8 @@ export interface LoginResult {
 /**
  * 生成微信扫码登录二维码
  */
-export const generateWechatQRCodeAPI = ($api: $Fetch) => {
+export const generateWechatQRCodeAPI = () => {
+    const { $api } = useNuxtApp()
     return $api<WechatQRCodeResult>('/wechat/qrcode', {
         method: 'post'
     })
@@ -59,7 +66,8 @@ export const generateWechatQRCodeAPI = ($api: $Fetch) => {
  * 检查微信扫码状态
  * @param qrCodeId 二维码ID
  */
-export const checkWechatQRCodeStatusAPI = ($api: $Fetch, qrCodeId: string) => {
+export const checkWechatQRCodeStatusAPI = (qrCodeId: string) => {
+    const { $api } = useNuxtApp()
     return $api<WechatQRCodeStatus>(`/wechat/check-qr-status?id=${qrCodeId}`, {
         method: 'GET'
     })
@@ -68,6 +76,7 @@ export const checkWechatQRCodeStatusAPI = ($api: $Fetch, qrCodeId: string) => {
 /**
  * 本地测试登录接口
  */
-export const testLogin = ($api: $Fetch) => {
+export const testLogin = () => {
+    const { $api } = useNuxtApp()
     return $api<LoginResult>('/wechat/test-login')
 }

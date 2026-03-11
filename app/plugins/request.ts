@@ -12,15 +12,15 @@ export default defineNuxtPlugin(() => {
 		credentials: 'include',
 
 		// ===== 请求拦截 =====
-		onRequest({ options }: FetchContext): void {
+		onRequest({ options: fetchOptions }: FetchContext): void {
 			const userStore = useUserStore()
 
-			const headers = new Headers((options.headers as HeadersInit) || {})
+			const headers = new Headers((fetchOptions.headers as HeadersInit) || {})
 			if (userStore.isLogin && userStore.token) {
 				headers.set('Authorization', `Bearer ${userStore.token}`)
 			}
 
-			options.headers = headers
+			fetchOptions.headers = headers
 		},
 
 		// ===== 统一"业务解包" =====
