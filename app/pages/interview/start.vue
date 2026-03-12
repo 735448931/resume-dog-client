@@ -132,14 +132,26 @@
 
         </div>
     </div>
+
+    <!-- 选择下一步弹窗 -->
+    <ServiceSelectModal v-model:open="showNextModal" @confirm="handleStartService" />
 </template>
 
 <script setup lang="ts">
 import jobCatalog from '@/data/job-categories.json'
 import ResumeSelector from '~/components/interview/ResumeSelector.vue'
+import ServiceSelectModal from '~/components/interview/ServiceSelectModal.vue'
 
 const interviewStore = useInterviewStore()
 const userStore = useUserStore()
+
+const showNextModal = ref(false)
+
+function handleStartService(serviceId: string | number) {
+    // TODO: 根据 serviceId 跳转对应流程
+    console.log('start service:', serviceId)
+}
+
 definePageMeta({
     layout: 'interview'
 })
@@ -209,8 +221,15 @@ const handleCategoryFilter = (categoryKey: any) => {
     searchQuery.value = '' // 清空搜索
 }
 
-const handleNext = () => {
+const canProceed = computed(() => {
+	return interviewStore.selectedPosition && interviewStore.resumeId
+})
 
+const handleNext = () => {
+    if (!canProceed.value) {
+        return
+    }
+    showNextModal.value = true
 }
 
 const handleSearch = () => {

@@ -14,12 +14,17 @@ export const useInterviewStore = defineStore(
 
         const selectedPosition = ref()
 
+        const resumeId = ref(null)
+
+        
+
 
         return {
             isSidebarOpen,
             currentStep,
             selectedService,
-            selectedPosition
+            selectedPosition,
+            resumeId
         }
     },
     {
