@@ -38,6 +38,7 @@
 <script setup lang="ts">
 import { useRoute, navigateTo, useToast } from '#imports'
 const route = useRoute()
+const interviewStore = useInterviewStore()
 const goHome = () => {
 
 }
@@ -62,6 +63,30 @@ const pageTitle = computed(() => {
     // 		return '未知路径'
     // 	}
     // }
+})
+
+const fetchUserInfo = async () => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+// 处理路由跳转逻辑
+const handleNavigate = async () => {
+    const currentPath = route.path
+
+    // 服务页面守卫
+    if (isEmpty(interviewStore.selectedPosition) && !route.query.resultId) {
+        navigateTo('/interview/start')
+        return
+    }
+}
+
+
+onMounted(() => {
+    handleNavigate()
 })
 
 </script>

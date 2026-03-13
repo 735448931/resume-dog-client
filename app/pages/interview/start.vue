@@ -141,15 +141,21 @@
 import jobCatalog from '@/data/job-categories.json'
 import ResumeSelector from '~/components/interview/ResumeSelector.vue'
 import ServiceSelectModal from '~/components/interview/ServiceSelectModal.vue'
+import { SERVICE } from '~/constants'
 
 const interviewStore = useInterviewStore()
 const userStore = useUserStore()
 
 const showNextModal = ref(false)
 
-function handleStartService(serviceId: string | number) {
-    // TODO: 根据 serviceId 跳转对应流程
-    console.log('start service:', serviceId)
+async function handleStartService(serviceId: string | number) {
+
+    if (serviceId === SERVICE.Resume) {
+        await navigateTo('/interview?serviceType=resume&step=input')
+    } else if (serviceId === SERVICE.Special) {
+        await navigateTo('/interview?serviceType=special&step=input')
+    }
+
 }
 
 definePageMeta({
