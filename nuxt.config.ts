@@ -8,5 +8,18 @@ export default defineNuxtConfig({
 		'@vueuse/nuxt',
 		['@nuxt/ui', { fonts: false }]
 	],
-	css: ['~/assets/css/main.css']
+	css: ['~/assets/css/main.css'],
+	runtimeConfig: {
+		public: {
+			apiBase: '/api'
+		}
+	},
+	nitro: {
+		devProxy: {
+			'/api/': {
+				target: 'http://localhost:8888/api',
+				changeOrigin: true
+			}
+		}
+	}
 })
