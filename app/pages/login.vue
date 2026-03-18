@@ -186,6 +186,8 @@
 </template>
 
 <script setup lang="ts">
+import { postRegisterApi } from '~/api/login'
+
 definePageMeta({ layout: false })
 
 const toast = useToast()
@@ -276,7 +278,15 @@ async function handleRegister() {
 		return
 	}
 	loading.value = true
-	await new Promise(r => setTimeout(r, 1400)) // mock delay
+
+	const data = await postRegisterApi({
+		username: registerState.email,
+		email: registerState.email,
+		password: registerState.password
+	})
+
+
+
 	loading.value = false
 	toast.add({ title: '注册成功', description: '账号已创建，请登录', color: 'success' })
 	switchTab('login')
