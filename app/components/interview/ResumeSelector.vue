@@ -80,9 +80,9 @@ let sseAbortController: AbortController | null = null
 
 // 假数据
 userStore.resumes = [
-    // { id: 1, resumeName: '前端工程师简历_2026', url: '' },
-    // { id: 2, resumeName: '全栈开发工程师简历', url: '' },
-    // { id: 3, resumeName: 'Java后端开发_应届生版本', url: '' },
+    { id: 1, resumeName: '前端工程师简历_2026', url: '' },
+    { id: 2, resumeName: '全栈开发工程师简历', url: '' },
+    { id: 3, resumeName: 'Java后端开发_应届生版本', url: '' },
 ]
 
 const selectResume = (resume: any) => {
