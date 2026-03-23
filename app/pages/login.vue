@@ -80,14 +80,14 @@
 					<template v-else>
 
 						<!-- Login Form -->
-						<UForm v-if="activeTab === 'login'" :state="loginState" class="space-y-4" @submit="handleLogin">
+						<UForm v-if="activeTab === 'login'" :state="loginForm" class="space-y-4" @submit="handleLogin">
 							<UFormField label="邮箱" name="email">
-								<UInput v-model="loginState.email" type="email" placeholder="请输入邮箱"
+								<UInput v-model="loginForm.email" type="email" placeholder="请输入邮箱"
 									icon="i-heroicons-envelope" size="lg" class="w-full" />
 							</UFormField>
 
 							<UFormField label="密码" name="password">
-								<UInput v-model="loginState.password" :type="showLoginPassword ? 'text' : 'password'"
+								<UInput v-model="loginForm.password" :type="showLoginPassword ? 'text' : 'password'"
 									placeholder="请输入密码" icon="i-heroicons-lock-closed" size="lg" class="w-full"
 									:trailing-icon="showLoginPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
 									@click-trailing="showLoginPassword = !showLoginPassword" />
@@ -95,7 +95,7 @@
 
 							<div class="flex items-center justify-between text-sm">
 								<label class="flex items-center gap-2 cursor-pointer select-none">
-									<input v-model="loginState.remember" type="checkbox"
+									<input v-model="userStore.remember" type="checkbox"
 										class="rounded text-primary-600" />
 									<span class="text-gray-600">记住我</span>
 								</label>
@@ -191,7 +191,7 @@ import { postRegisterApi } from '~/api/login'
 definePageMeta({ layout: false })
 
 const toast = useToast()
-
+const userStore = useUserStore()
 // --- Tabs ---
 const tabs = [
 	{ key: 'login', label: '登录' },
@@ -209,24 +209,26 @@ function switchTab(key: TabKey) {
 }
 
 // --- Login ---
-const loginState = reactive({
+const loginForm = reactive({
 	email: '',
-	password: '',
-	remember: false
+	password: ''
 })
 const showLoginPassword = ref(false)
 
 async function handleLogin() {
-	if (!loginState.email || !loginState.password) {
-		toast.add({ title: '请填写邮箱和密码', color: 'warning' })
-		return
+	if (!loginForm.email || !loginForm.password) {
+		return toast.add({ title: '请填写邮箱和密码', color: 'warning' })
 	}
 	loading.value = true
-	await new Promise(r => setTimeout(r, 1200)) // mock delay
-	loading.value = false
-	// mock success
-	toast.add({ title: '登录成功', description: `欢迎回来，${loginState.email}`, color: 'success' })
-	navigateTo('/')
+	try {
+		await userStore.handleEmailLogin(loginForm)
+		toast.add({ title: '登录成功', description: `欢迎回来，${loginForm.email}`, color: 'success' })
+		navigateTo('/')
+	} catch (e) {
+		console.error('[handleLogin error]', e)
+	} finally {
+		loading.value = false
+	}
 }
 
 // --- Register ---

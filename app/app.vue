@@ -1,11 +1,11 @@
 <template>
-  <UApp>
+  <UApp :toaster="{ position: 'top-right' }">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
 
-		<!-- <AuthModal></AuthModal> -->
+    <!-- <AuthModal></AuthModal> -->
 
-		
-	</UApp>
+
+  </UApp>
 </template>

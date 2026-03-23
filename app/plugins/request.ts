@@ -15,7 +15,9 @@ export default defineNuxtPlugin(() => {
 		onRequest({ options: fetchOptions }: FetchContext): void {
 			const userStore = useUserStore()
 
-			const headers = new Headers((fetchOptions.headers as HeadersInit) || {})
+			const headers = new Headers(
+				(fetchOptions.headers as HeadersInit) || {}
+			)
 			if (userStore.isLogin && userStore.token) {
 				headers.set('Authorization', `Bearer ${userStore.token}`)
 			}
@@ -25,11 +27,13 @@ export default defineNuxtPlugin(() => {
 
 		// ===== 统一"业务解包" =====
 		// 假定后端返回 { code, message, data }，且 code === 200 表示成功
-		onResponse({ response }: FetchContext & { response: FetchResponse<unknown> }): void {
+		onResponse({
+			response
+		}: FetchContext & { response: FetchResponse<unknown> }): void {
 			const body = response._data as Record<string, unknown> | null
 
 			if (body && typeof body === 'object' && 'code' in body) {
-				if (body.code === 200) {
+				if (body.code === 200 || body.code === 201) {
 					response._data = body.data // 页面拿到的就是 data
 					return
 				}
@@ -37,11 +41,17 @@ export default defineNuxtPlugin(() => {
 				if (import.meta.client) {
 					const toast = useToast()
 					if (body.code === 401) {
-						toast.add({ title: '登录已过期，请重新登录', color: 'warning' })
+						toast.add({
+							title: '登录已过期，请重新登录',
+							color: 'warning'
+						})
 						const userStore = useUserStore()
 						userStore.logout()
 					} else if (body.code === 500) {
-						toast.add({ title: (body.message as string) || '请求失败', color: 'error' })
+						toast.add({
+							title: (body.message as string) || '请求失败',
+							color: 'error'
+						})
 					}
 				}
 				throw createError({
@@ -52,24 +62,35 @@ export default defineNuxtPlugin(() => {
 		},
 
 		// ===== HTTP 层错误处理 =====
-		async onResponseError({ response }: FetchContext & { response: FetchResponse<unknown> }): Promise<void> {
+		async onResponseError({
+			response
+		}: FetchContext & { response: FetchResponse<unknown> }): Promise<void> {
 			const status = response?.status
 
 			if (status === 401) {
 				if (import.meta.client) {
 					const toast = useToast()
-					toast.add({ title: '登录已过期，请重新登录', color: 'warning' })
+					toast.add({
+						title: '登录已过期，请重新登录',
+						color: 'warning'
+					})
 					const userStore = useUserStore()
 					userStore.logout?.()
 					navigateTo({ path: '/login', replace: true })
 				}
 				// 服务端场景直接抛错即可
-				throw createError({ statusCode: 401, statusMessage: 'Unauthorized' })
+				throw createError({
+					statusCode: 401,
+					statusMessage: 'Unauthorized'
+				})
 			}
 
 			if (import.meta.client) {
 				const toast = useToast()
-				const errData = response?._data as Record<string, unknown> | null
+				const errData = response?._data as Record<
+					string,
+					unknown
+				> | null
 				toast.add({
 					title: (errData?.message as string) || '网络错误',
 					color: 'error'

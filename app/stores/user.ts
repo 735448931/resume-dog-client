@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { MAX_RESUME_COUNT } from '@/constants'
+import type { EmailLoginParams } from '~/api/interface/login'
+import { postEmailLoginApi } from '~/api/login'
 
 export const useUserStore = defineStore(
 	'user',
@@ -8,17 +9,22 @@ export const useUserStore = defineStore(
 		const userInfo = ref<Record<string, any>>({})
 		const isLogin = ref(false)
 		const token = ref('')
-		const resumes = ref<any[]>([])
+		const remember = ref(false)
+		const reumes = computed(() => userInfo.value?.resumes || [])
 
-		// 是否可以添加更多简历
-		const canAddResume = computed(() => resumes.value.length < MAX_RESUME_COUNT)
+		// 邮箱密码登录
+		const handleEmailLogin = async (params: EmailLoginParams) => {
+			const data = await postEmailLoginApi(params)
+			token.value = data.token
+			isLogin.value = true
+			updateUserInfo(data.userInfo)
+		}
 
 		// 登出
 		const logout = () => {
 			isLogin.value = false
 			token.value = ''
 			userInfo.value = {}
-			resumes.value = []
 			// navigateTo('/login')
 		}
 
@@ -31,10 +37,11 @@ export const useUserStore = defineStore(
 			userInfo,
 			isLogin,
 			token,
-			resumes,
-			canAddResume,
+			reumes,
+			remember,
 			logout,
-			updateUserInfo
+			updateUserInfo,
+			handleEmailLogin
 		}
 	},
 	{

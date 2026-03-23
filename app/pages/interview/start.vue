@@ -54,7 +54,7 @@
                 <div class="flex-1 overflow-hidden flex flex-col ">
                     <span class="text-xs text-neutral-500 mb-2">
                         {{ filteredPositions.length > 0 ? `或从下方列表中选择（${filteredPositions.length} 个岗位` :
-                        '暂无匹配的岗位，请尝试其他搜索条件' }}
+                            '暂无匹配的岗位，请尝试其他搜索条件' }}
                     </span>
 
                     <div v-if="filteredPositions.length > 0" class="flex gap-2 flex-col overflow-auto flex-1">
@@ -62,9 +62,7 @@
                             'border-primary-300 bg-primary-50/50 shadow-sm':
                                 item.positionId === interviewStore.selectedPosition?.id
                         }" class="p-3 rounder-lg border cursor-pointer transition-all border-gray-200 hover:border-primary-300 hover:bg-primary-50/50 hover:shadow-sm"
-                            v-for="item in filteredPositions" :key="item.id"
-                            @click="selectPosition(item)"
-                            >
+                            v-for="item in filteredPositions" :key="item.id" @click="selectPosition(item)">
 
                             <div class="flex items-center justify-between gap-2">
                                 <div class="flex-1 min-w-0">
@@ -115,18 +113,18 @@
                             <h2 class="text-lg font-semibold text-neutral-900">
                                 选择简历
                                 <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                                    {{ userStore.resumes.length }}/5
+                                    {{ userStore.reumes.length }}/5
                                 </span>
                             </h2>
                         </template>
                     </ResumeSelector>
                 </div>
 
-				<div class="pt-4 border-t border-gray-200 mt-4">
-					<UButton color="primary" size="lg" block @click="handleNext">
-						下一步：开启专项服务
-					</UButton>
-				</div>
+                <div class="pt-4 border-t border-gray-200 mt-4">
+                    <UButton color="primary" size="lg" block @click="handleNext">
+                        下一步：开启专项服务
+                    </UButton>
+                </div>
 
             </div>
 
@@ -188,9 +186,9 @@ const positions = ref(
     ))
 )
 
-const getCategoryLabel = (category:any) => {
-	const cat = categories.find((c) => c.key === category)
-	return cat ? cat.label : category
+const getCategoryLabel = (category: any) => {
+    const cat = categories.find((c) => c.key === category)
+    return cat ? cat.label : category
 }
 
 
@@ -217,8 +215,8 @@ const filteredPositions = computed(() => {
     return result
 })
 
-const selectPosition = (item:any) => {
-	interviewStore.selectedPosition = item
+const selectPosition = (item: any) => {
+    interviewStore.selectedPosition = item
 }
 
 // 分类筛选处理
@@ -228,7 +226,7 @@ const handleCategoryFilter = (categoryKey: any) => {
 }
 
 const canProceed = computed(() => {
-	return interviewStore.selectedPosition && interviewStore.resumeId
+    return interviewStore.selectedPosition && interviewStore.resumeId
 })
 
 const handleNext = () => {

@@ -1,21 +1,15 @@
-// 最大支持上传的简历数
-export const MAX_RESUME_COUNT = 5
-
 // 服务类型
-export enum SERVICE  {
-    Resume = 1,   // 面试押题
-    Special = 2,  // 专项面试
+export enum SERVICE {
+	Resume = 1, // 面试押题
+	Special = 2 // 专项面试
 }
 
-// 服务步骤 
+// 服务步骤
 export enum SERVICE_STEP {
-    Select = 1,   // 选择岗位和简历
-    Interview = 2,  // 面试中
-    Report = 3,  // 查看报告
+	Select = 1, // 选择岗位和简历
+	Interview = 2, // 面试中
+	Report = 3 // 查看报告
 }
-
-
-
 
 // 服务亮点列表 - 核心服务类型
 export const serviceHighlights = [
@@ -37,7 +31,8 @@ export const serviceHighlights = [
 		id: SERVICE.Special,
 		title: '专项面试',
 		badge: '实战模拟',
-		description: '针对技术面、业务面进行深度模拟，AI 面试官实时追问与反馈。',
+		description:
+			'针对技术面、业务面进行深度模拟，AI 面试官实时追问与反馈。',
 		points: [
 			'真实面试场景 1v1 模拟对话',
 			'AI 即时追问与深度挖掘',
@@ -45,5 +40,5 @@ export const serviceHighlights = [
 		],
 		icon: 'i-heroicons-bolt',
 		highlight: '约 1 小时，支持语音/文字多模态'
-	},
+	}
 ]
