@@ -4,18 +4,7 @@
             <!-- 左侧：AI 对话区域（占 2 列） -->
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm flex flex-col min-h-0 overflow-hidden">
                 <!-- TODO: 替换为 AIDialogue 组件 -->
-                <div class="p-6 border-b border-gray-100">
-                    <h3 class="font-semibold text-neutral-900">AI 面试对话</h3>
-                </div>
-                <div class="flex-1 overflow-y-auto p-6 space-y-4">
-                    <!-- 对话内容区 -->
-                </div>
-                <div class="p-4 border-t border-gray-100 flex gap-3">
-                    <UInput class="flex-1" placeholder="请输入您的回答..." size="lg" />
-                    <UButton color="primary" size="lg" icon="i-heroicons-paper-airplane">
-                        发送
-                    </UButton>
-                </div>
+                <AiDialog></AiDialog>
             </div>
 
             <!-- 右侧：3D 数字人（占 1 列） -->
@@ -47,6 +36,8 @@
 
 
 <script setup lang="ts">
+import AiDialog from '../AiDialog.vue';
+
 const showCountdown = ref(false)
 const countdown = ref(5)
 </script>
