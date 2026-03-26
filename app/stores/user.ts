@@ -14,7 +14,8 @@ export const useUserStore = defineStore(
 
 		// 邮箱密码登录
 		const handleEmailLogin = async (params: EmailLoginParams) => {
-			const data = await postEmailLoginApi(params)
+			const { data } = await postEmailLoginApi(params)
+
 			token.value = data.token
 			isLogin.value = true
 			updateUserInfo(data.userInfo)

@@ -24,8 +24,13 @@
 
         <!-- 简历列表 -->
         <div v-if="userStore.reumes.length > 0" class="flex flex-col gap-2">
-            <div v-for="resume in userStore.reumes" :key="resume.id" @click="selectResume(resume)"
-                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-colors cursor-pointer">
+            <div v-for="resume in userStore.reumes" :key="resume._id" @click="selectResume(resume)"
+                :class="[
+                    'group flex items-center gap-3 px-3 py-2.5 rounded-lg border transition-colors cursor-pointer',
+                    interviewStore.resumeId === resume._id
+                        ? 'border-primary-500 bg-primary-50 ring-1 ring-primary-400'
+                        : 'border-gray-200 hover:border-primary-300 hover:bg-primary-50'
+                ]">
                 <!-- 文件图标 -->
                 <UIcon name="i-heroicons-document-text" class="w-5 h-5 text-primary-500 shrink-0" />
 
@@ -81,7 +86,7 @@ let sseAbortController: AbortController | null = null
 
 
 const selectResume = (resume: any) => {
-    interviewStore.resumeId = resume.id
+    interviewStore.resumeId = resume._id
 }
 
 

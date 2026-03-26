@@ -1,9 +1,10 @@
+import type { HttpResponse } from './interface/common'
 import type { EmailLoginParams, EmailLoginResult } from './interface/login'
 
 // 账号登录
 export const postEmailLoginApi = (body: EmailLoginParams) => {
 	const { $api } = useNuxtApp()
-	return $api<EmailLoginResult>('/user/login', {
+	return $api<HttpResponse<EmailLoginResult>>('/user/login', {
 		method: 'POST',
 		body
 	})

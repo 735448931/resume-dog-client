@@ -16,18 +16,9 @@
             <div class="space-y-5 px-1">
                 <!-- 文件上传 -->
                 <UFormField label="简历文件" required :error="errorMsg">
-                    <UFileUpload
-                        v-model="selectedFile"
-                        :accept="ACCEPT"
-                        layout="list"
-                        icon="i-heroicons-document-text"
-                        label="拖拽文件到此处，或点击选择"
-                        description="PDF、DOC、DOCX · 最大 10MB"
-                        :disabled="isUploading"
-                        :highlight="!!errorMsg"
-                        :file-image="false"
-                        class="w-full min-h-36"
-                    />
+                    <UFileUpload v-model="selectedFile" :accept="ACCEPT" layout="list" icon="i-heroicons-document-text"
+                        label="拖拽文件到此处，或点击选择" description="PDF、DOC、DOCX · 最大 10MB" :disabled="isUploading"
+                        :highlight="!!errorMsg" :file-image="false" class="w-full min-h-36" />
                 </UFormField>
 
             </div>
@@ -38,12 +29,7 @@
                 <UButton variant="ghost" color="neutral" :disabled="isUploading" @click="onClose">
                     取消
                 </UButton>
-                <UButton
-                    color="primary"
-                    :disabled="!canSubmit"
-                    :loading="isUploading"
-                    @click="handleUpload"
-                >
+                <UButton color="primary" :disabled="!canSubmit" :loading="isUploading" @click="handleUpload">
                     <UIcon v-if="!isUploading" name="i-heroicons-arrow-up-tray" class="w-4 h-4" />
                     {{ isUploading ? '上传中...' : '确认上传' }}
                 </UButton>
@@ -56,8 +42,10 @@
 
 
 <script setup lang="ts">
-const isOpen = defineModel<boolean>('open', { default: false })
+import { postResumeApi } from '~/api/resume'
 
+const isOpen = defineModel<boolean>('open', { default: false })
+const userStore = useUserStore()
 const selectedFile = ref<File | null>(null)
 const isUploading = ref(false)
 const errorMsg = ref('')
@@ -87,8 +75,20 @@ async function handleUpload() {
     errorMsg.value = ''
 
     try {
-        // TODO: 替换为实际上传接口
-        await new Promise(resolve => setTimeout(resolve, 1800))
+
+        const res = await postResumeApi({
+            name: '我的简历',
+            url: 'https://testasset.darcg.cn/app/resume/779378595844165_20260378082218492.pdf'
+        })
+
+
+        userStore.userInfo.resumes = res.resumes
+
+
+
+
+
+
         onClose()
     } catch {
         errorMsg.value = '上传失败，请稍后重试'
